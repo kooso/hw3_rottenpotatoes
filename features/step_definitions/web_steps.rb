@@ -87,7 +87,7 @@ When /^(?:|I )select "([^"]*)" from "([^"]*)"$/ do |value, field|
 end
 
 When /^(?:|I )check "([^"]*)"$/ do |field|
-  check(field)
+  check(%Q{ratings[#{field}]})
 end
 
 When /^(?:|I )uncheck "([^"]*)"$/ do |field|
