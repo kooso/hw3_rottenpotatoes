@@ -21,6 +21,12 @@ Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   assert reg =~ page.body, %Q[Shoud be "#{e1}" before "#{e2}"]
 end
 
+Then /I should see all movies sored by its release date/ do
+  Movie.find(:all, :order => 'release_date').each_cons 2, do |movie1, movie2|
+    step %Q[I should see "#{movie1.title}" before "#{movie2.title}"]
+  end
+end
+
 Then /I should see all movies sorted by title/ do
   Movie.find(:all, :order => 'title ASC').each_cons 2, do |movie1, movie2|
     step %Q[I should see "#{movie1.title}" before "#{movie2.title}"]
