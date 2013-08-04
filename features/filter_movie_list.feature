@@ -33,4 +33,6 @@ Scenario: no ratings selected
   # see assignment
 
 Scenario: all ratings selected
+  Given I check all ratings
+  Then I should see all of the movies
   # see assignment
