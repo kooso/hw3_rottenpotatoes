@@ -91,7 +91,7 @@ When /^(?:|I )check "([^"]*)"$/ do |field|
 end
 
 When /^(?:|I )uncheck "([^"]*)"$/ do |field|
-  uncheck(field)
+  uncheck(%Q{ratings[#{field}]})
 end
 
 When /^(?:|I )choose "([^"]*)"$/ do |field|

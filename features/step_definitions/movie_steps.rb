@@ -11,6 +11,11 @@ end
 Given /I check all ratings/ do
   step %Q[I check the following ratings: #{Movie.all_ratings.join(', ')}]
 end
+
+Given /I unchek all other but the following ratings: (.*)/ do |ratings|
+  unchekRatins = Movie.all_ratings - ratings.split(', ')
+  step %Q[I uncheck the following ratings: #{unchekRatins.join(', ')}]
+end
 # Make sure that one string (regexp) occurs before or after another one
 #   on the same page
 
@@ -30,6 +35,24 @@ end
 Then /I should see all movies sorted by title/ do
   Movie.find(:all, :order => 'title ASC').each_cons 2, do |movie1, movie2|
     step %Q[I should see "#{movie1.title}" before "#{movie2.title}"]
+  end
+end
+
+Then /I should see only the movies with the following ratings: (.*)/ do |rating_list|
+  step %Q[I should see the movies with the following ratings: #{rating_list}]
+  ratings_excludes = (Movie.all_ratings - rating_list.split(', ')).join(', ')
+  step %Q[I should not see the movies with the following ratings: #{ratings_excludes}]
+end
+
+Then /I should not see the movies with the following ratings: (.*)/ do |rating_list|
+  Movie.where('rating in (?)', rating_list).each do |movie|
+    step %Q[I should not see "#movie.title"]
+  end
+end
+
+Then /I should see the movies with the following ratings: (.*)/ do |rating_list|
+  Movie.where('rating in (?)', rating_list.split(', ')).each do |movie|
+    step %Q[I should see "#{movie.title}"]
   end
 end
 

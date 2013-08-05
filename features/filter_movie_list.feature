@@ -25,9 +25,12 @@ Scenario: restrict to movies with 'PG' or 'R' ratings
   # enter step(s) to check the 'PG' and 'R' checkboxes
   Given I check the following ratings: G, R
   # enter step(s) to uncheck all other checkboxes
+    And I unchek all other but the following ratings: R, G
   # enter step to "submit" the search form on the homepage
+  When I press "Refresh"
   # enter step(s) to ensure that PG and R movies are visible
   # enter step(s) to ensure that other movies are not visible
+  Then I should see only the movies with the following ratings: R, G
 
 Scenario: no ratings selected
   # see assignment
