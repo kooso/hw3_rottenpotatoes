@@ -27,13 +27,13 @@ Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
 end
 
 Then /I should see all movies sored by its release date/ do
-  Movie.find(:all, :order => 'release_date').each_cons 2, do |movie1, movie2|
+  Movie.find(:all, :order => 'release_date').each_cons(2) do |movie1, movie2|
     step %Q[I should see "#{movie1.title}" before "#{movie2.title}"]
   end
 end
 
 Then /I should see all movies sorted by title/ do
-  Movie.find(:all, :order => 'title ASC').each_cons 2, do |movie1, movie2|
+  Movie.find(:all, :order => 'title ASC').each_cons(2) do |movie1, movie2|
     step %Q[I should see "#{movie1.title}" before "#{movie2.title}"]
   end
 end
@@ -67,9 +67,6 @@ end
 #  "When I check the following ratings: G"
 
 When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
-  rating_list.split(', ').each do |rating|
-    step %Q[I #{uncheck}check "#{rating}"]
-  end
   # HINT: use String#split to split up the rating_list, then
   rating_list.split(', ').each do |rating|
     step %Q[I #{uncheck}check "ratings[#{rating}]"]
